@@ -14,8 +14,8 @@ public class MainApp implements QuarkusApplication, IProfile {
 
     private final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
-    @Inject
-    MuYunConfig config;
+//    @Inject
+//    MuYunConfig config;
 
     @Override
     public int run(String... args) {
