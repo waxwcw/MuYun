@@ -16,6 +16,8 @@ dependencies {
     api("io.quarkus:quarkus-rest-jackson")
     api("io.quarkus:quarkus-smallrye-openapi")
     api("io.quarkus:quarkus-scheduler")
+    api("io.quarkus:quarkus-smallrye-jwt")
+    api("io.quarkus:quarkus-smallrye-jwt-build")
 
     api(libs.commons.codes)
     api(libs.bcprov)

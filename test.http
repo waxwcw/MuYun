@@ -1,0 +1,106 @@
+
+
+POST http://127.0.0.1:8080/api/user/create
+Content-Type: application/json
+
+{
+    "account": "00000",
+    "nickname": "测试用户0",
+    "avatar_url": "https://example.com/avatar.png",
+    "password": "123456"
+}
+
+###
+POST http://127.0.0.1:8080/api/user/create
+Content-Type: application/json
+
+{
+    "account": "11111",
+    "nickname": "测试用户1",
+    "avatar_url": "https://example.com/avatar.png"
+}
+
+###
+POST http://127.0.0.1:8080/api/user/create
+Content-Type: application/json
+
+{
+    "account": "22222",
+    "nickname": "测试用户2",
+    "avatar_url": "https://example.com/avatar.png"
+}
+
+###
+
+POST http://127.0.0.1:8080/api/report/create
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OGE2Y2U1NS02MTNhLTQ0NWEtOTk3Zi03N2Q2ZGM3YmJkNDUiLCJpc3MiOiJtdXl1bi1wbGF0Zm9ybSIsImlhdCI6MTc0MzUxOTA5NSwiZXhwIjoxNzQzNjA1NDk1LCJncm91cHMiOlsibXV5dW4tcGxhdGZvcm0iLCJ1c2VyIl0sImZ1bGxfbmFtZSI6Iua1i-ivleeUqOaItzAiLCJ1c2VybmFtZSI6IjAwMDAwIiwianRpIjoiOWMwOTUxZGQtNzUwNC00NGFmLWJlMDctMGE2M2UwNGExNGE5In0.cEQBbZsV5-dPFvOjpTOlJWngUVwE1ZLjaEAqSUHdtjmsWcHAYeopdNn4JsY9rUifVUH4TDXC_0AOzpJqd-FcyUMIdGFSUPhlBdqKr0OJELQy7kRCIzhql5CRjjYz0-WKruRh08oLdNcqtkSOuv8HtNRo8R_ASTDd8owWUe-DJ2OxZ0ARchW13IrZlPCfjR8ZSA-xwO_tIZftQLgh98UuW0hRIyoEcSZViHdhJ6Nk5HUFCcGZPisXpejO4kfiShiayuOYe0EUs6kwaHNq3d2KFeYW5mw7xiwJSGuQX8AlUBCIXpuN2hMbS2jPR9F0Q2WQ9iI1pwz1oWtLTS2qNbkBEw",
+
+{
+    "reporter_id": "22222",
+    "reported_type": "post",
+    "reported_id": "22222",
+    "reason": "测试"
+}
+
+
+###
+POST http://127.0.0.1:8080/api/feedback/create
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OGE2Y2U1NS02MTNhLTQ0NWEtOTk3Zi03N2Q2ZGM3YmJkNDUiLCJpc3MiOiJtdXl1bi1wbGF0Zm9ybSIsImlhdCI6MTc0MzUxOTA5NSwiZXhwIjoxNzQzNjA1NDk1LCJncm91cHMiOlsibXV5dW4tcGxhdGZvcm0iLCJ1c2VyIl0sImZ1bGxfbmFtZSI6Iua1i-ivleeUqOaItzAiLCJ1c2VybmFtZSI6IjAwMDAwIiwianRpIjoiOWMwOTUxZGQtNzUwNC00NGFmLWJlMDctMGE2M2UwNGExNGE5In0.cEQBbZsV5-dPFvOjpTOlJWngUVwE1ZLjaEAqSUHdtjmsWcHAYeopdNn4JsY9rUifVUH4TDXC_0AOzpJqd-FcyUMIdGFSUPhlBdqKr0OJELQy7kRCIzhql5CRjjYz0-WKruRh08oLdNcqtkSOuv8HtNRo8R_ASTDd8owWUe-DJ2OxZ0ARchW13IrZlPCfjR8ZSA-xwO_tIZftQLgh98UuW0hRIyoEcSZViHdhJ6Nk5HUFCcGZPisXpejO4kfiShiayuOYe0EUs6kwaHNq3d2KFeYW5mw7xiwJSGuQX8AlUBCIXpuN2hMbS2jPR9F0Q2WQ9iI1pwz1oWtLTS2qNbkBEw",
+
+{
+"user_id": "22222",
+"question_id": "22222",
+"content": "测试"
+}
+
+###
+# SecurityController 测试用例
+
+### 用户登录 - 成功
+POST http://127.0.0.1:8080/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "00000",
+    "password": "123456"
+}
+
+### 用户登录 - 失败（用户不存在）
+POST http://127.0.0.1:8080/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "nonexistent",
+    "password": "123456"
+}
+
+### 用户登录 - 失败（密码错误）
+POST http://127.0.0.1:8080/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "00000",
+    "password": "wrongpassword"
+}
+
+### 用户登录 - 失败（缺少参数）
+POST http://127.0.0.1:8080/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "00000"
+}
+
+### 验证Token - 需要先登录获取token
+POST http://127.0.0.1:8080/api/security/isValidToken
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OGE2Y2U1NS02MTNhLTQ0NWEtOTk3Zi03N2Q2ZGM3YmJkNDUiLCJpc3MiOiJtdXl1bi1wbGF0Zm9ybSIsImlhdCI6MTc0MzUxOTA5NSwiZXhwIjoxNzQzNjA1NDk1LCJncm91cHMiOlsibXV5dW4tcGxhdGZvcm0iLCJ1c2VyIl0sImZ1bGxfbmFtZSI6Iua1i-ivleeUqOaItzAiLCJ1c2VybmFtZSI6IjAwMDAwIiwianRpIjoiOWMwOTUxZGQtNzUwNC00NGFmLWJlMDctMGE2M2UwNGExNGE5In0.cEQBbZsV5-dPFvOjpTOlJWngUVwE1ZLjaEAqSUHdtjmsWcHAYeopdNn4JsY9rUifVUH4TDXC_0AOzpJqd-FcyUMIdGFSUPhlBdqKr0OJELQy7kRCIzhql5CRjjYz0-WKruRh08oLdNcqtkSOuv8HtNRo8R_ASTDd8owWUe-DJ2OxZ0ARchW13IrZlPCfjR8ZSA-xwO_tIZftQLgh98UuW0hRIyoEcSZViHdhJ6Nk5HUFCcGZPisXpejO4kfiShiayuOYe0EUs6kwaHNq3d2KFeYW5mw7xiwJSGuQX8AlUBCIXpuN2hMbS2jPR9F0Q2WQ9iI1pwz1oWtLTS2qNbkBEw",
+
+### 用户登出
+POST http://127.0.0.1:8080/api/security/logout
+Content-Type: application/json
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI1OGE2Y2U1NS02MTNhLTQ0NWEtOTk3Zi03N2Q2ZGM3YmJkNDUiLCJpc3MiOiJtdXl1bi1wbGF0Zm9ybSIsImlhdCI6MTc0MzUxNzg1MCwiZXhwIjoxNzQzNjA0MjUwLCJncm91cHMiOlsidXNlciJdLCJmdWxsX25hbWUiOiLmtYvor5XnlKjmiLcwIiwidXNlcm5hbWUiOiIwMDAwMCIsImp0aSI6IjJlZmIxMDhkLTQxYWEtNDFkYy05M2FjLTk3M2Q2YWIzOTlmOSJ9.nLDVAW67AEw6eB4Iwiaq8yeOAeSy_qPG9RsGeNO_o4kmqu1g7XPe7Qi4glLqZ7lK9sSxArmsrjgHY_hxAO6D90TGJjTWunuMUFx8eu25oceszC6hgB0uaOsa9nI5F_Eul2xC7BA-7V2J_s1YFJLTfUYhONspl1u744SclJ0Cb5xOQmxF30d0ScbCgKxH4tCiMXbN9lij6VF_IZSn7T91h4Fqi-X-ZZrRtn7GKL8NzR7FQGguLLTRGkR5g_OMwUgqSPQ_Y3eIo0Yd-ztANiQopfwc47TZrph-CGutEBR6cjb1wqkqJn04l7s6ApzPfQXiksZMyhijF7sDJJulgBVIXg
+
+###

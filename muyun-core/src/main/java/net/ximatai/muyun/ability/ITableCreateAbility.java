@@ -39,28 +39,22 @@ public interface ITableCreateAbility extends IMetadataAbility {
         if (this instanceof ISortAbility ability) {
             wrapper.addColumn(ability.getSortColumn().getColumn());
         }
-        if (this instanceof ISecurityAbility ability) {
-            ability.getSignColumns().forEach(wrapper::addColumn);
-        }
-
-        if (this instanceof ISoftDeleteAbility ability) {
-            if (this instanceof IArchiveWhenDelete) {
-                throw new MuYunException("ISoftDeleteAbility 能力与 IArchiveWhenDelete 能力互斥，不可同时采用");
-            }
-
-            wrapper.addColumn(ability.getSoftDeleteColumn());
-            wrapper.addColumn("t_delete");
-            wrapper.addColumn("id_at_auth_user__delete");
-        }
+//        if (this instanceof ISecurityAbility ability) {
+//            ability.getSignColumns().forEach(wrapper::addColumn);
+//        }
+//
+//        if (this instanceof ISoftDeleteAbility ability) {
+//            if (this instanceof IArchiveWhenDelete) {
+//                throw new MuYunException("ISoftDeleteAbility 能力与 IArchiveWhenDelete 能力互斥，不可同时采用");
+//            }
+//
+//            wrapper.addColumn(ability.getSoftDeleteColumn());
+//            wrapper.addColumn("t_delete");
+//            wrapper.addColumn("id_at_auth_user__delete");
+//        }
 
         boolean build = new TableBuilder(db).build(wrapper);
 
-        if (this instanceof IArchiveWhenDelete ability) {
-            wrapper.setName(ability.getArchiveTableName());
-            wrapper.addColumn("t_archive", "归档时间", "now()");
-            wrapper.addColumn("id_at_auth_user__archive", "归档人");
-            new TableBuilder(db).build(wrapper);
-        }
 
         this.onTableCreated(build);
     }

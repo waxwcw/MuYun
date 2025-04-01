@@ -70,9 +70,6 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         StringBuilder starSql = new StringBuilder("%s.*".formatted(getMainTable()));
         StringBuilder joinSql = new StringBuilder();
         String softDeleteSql = "";
-        if (this instanceof ISoftDeleteAbility ability) {
-            softDeleteSql = " and %s.%s = false ".formatted(getMainTable(), ability.getSoftDeleteColumn().getName());
-        }
 
         if (this instanceof IReferenceAbility referenceAbility) {
 
@@ -117,16 +114,6 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         return "select %s from %s %s where 1=1 %s ".formatted(starSql, mainTable, joinSql, softDeleteSql);
     }
 
-    default void processEachRow(Map row) {
-        if (this instanceof ISecurityAbility securityAbility) {
-            securityAbility.decrypt(row);
-            securityAbility.checkSign(row);
-        }
-        if (this instanceof IDesensitizationAbility desensitizationAbility) {
-            desensitizationAbility.desensitize(row);
-        }
-    }
-
     @GET
     @Path("/view/{id}")
     @Operation(summary = "查看指定的数据")
@@ -136,7 +123,6 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         if (row == null) {
             return null;
         }
-        processEachRow(row);
         return row;
     }
 
@@ -248,8 +234,6 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         }
 
         List<Map<String, Object>> list = getDB().query(querySql.toString(), params);
-
-        list.forEach(this::processEachRow);
 
         return new PageResult<>(list, total, size, page);
     }

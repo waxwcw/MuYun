@@ -5,11 +5,9 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import net.ximatai.muyun.ability.IChildrenAbility;
-import net.ximatai.muyun.ability.IDataBroadcastAbility;
 import net.ximatai.muyun.ability.IDatabaseAbilityStd;
 import net.ximatai.muyun.ability.IMetadataAbility;
 import net.ximatai.muyun.ability.IRuntimeAbility;
-import net.ximatai.muyun.ability.ISecurityAbility;
 import net.ximatai.muyun.ability.ITreeAbility;
 import net.ximatai.muyun.core.exception.MuYunException;
 import net.ximatai.muyun.model.DataChangeChannel;
@@ -74,15 +72,6 @@ public interface IUpdateAbility extends IDatabaseAbilityStd, IMetadataAbility {
 
         }
 
-        if (this instanceof IDataCheckAbility dataCheckAbility) {
-            dataCheckAbility.check(map, true);
-            dataCheckAbility.checkWhenUpdate(id, body);
-        }
-
-        if (this instanceof ISecurityAbility securityAbility) {
-            securityAbility.signAndEncrypt(map);
-        }
-
         if (this instanceof IChildrenAbility childrenAbility) {
             childrenAbility.getChildren().forEach(childTableInfo -> {
                 String childAlias = childTableInfo.getChildAlias();
@@ -93,10 +82,6 @@ public interface IUpdateAbility extends IDatabaseAbilityStd, IMetadataAbility {
         }
 
         int result = getDB().updateItem(getSchemaName(), getMainTable(), map);
-
-        if (this instanceof IDataBroadcastAbility dataBroadcastAbility) {
-            dataBroadcastAbility.broadcast(DataChangeChannel.Type.UPDATE, id);
-        }
 
         afterUpdate(id);
 

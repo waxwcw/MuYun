@@ -20,15 +20,6 @@ public interface IRuntimeUser {
             return "white";
         }
 
-        @Override
-        public String getOrganizationId() {
-            return "0";
-        }
-
-        @Override
-        public String getDepartmentId() {
-            return "0";
-        }
     };
 
     String getId();
@@ -37,9 +28,6 @@ public interface IRuntimeUser {
 
     String getUsername();
 
-    String getOrganizationId();
-
-    String getDepartmentId();
 
     static IRuntimeUser build(String id) {
         return new IRuntimeUser() {
@@ -59,15 +47,6 @@ public interface IRuntimeUser {
                 return "";
             }
 
-            @Override
-            public String getOrganizationId() {
-                return "";
-            }
-
-            @Override
-            public String getDepartmentId() {
-                return "";
-            }
         };
     }
 
@@ -89,15 +68,6 @@ public interface IRuntimeUser {
                 return object.getString("username");
             }
 
-            @Override
-            public String getOrganizationId() {
-                return object.getString("organizationId");
-            }
-
-            @Override
-            public String getDepartmentId() {
-                return object.getString("departmentId");
-            }
         };
     }
 }

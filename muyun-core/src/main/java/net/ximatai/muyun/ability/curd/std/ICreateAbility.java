@@ -6,8 +6,6 @@ import jakarta.ws.rs.Path;
 import net.ximatai.muyun.ability.*;
 import net.ximatai.muyun.core.exception.MuYunException;
 import net.ximatai.muyun.database.builder.Column;
-import net.ximatai.muyun.model.DataChangeChannel;
-import net.ximatai.muyun.model.IRuntimeUser;
 import net.ximatai.muyun.util.StringUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
@@ -47,14 +45,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
             }
         }
 
-        if (this instanceof IDataCheckAbility dataCheckAbility) {
-            dataCheckAbility.check(body, false);
-            dataCheckAbility.checkWhenCreate(body);
-        }
-
-        if (this instanceof ISecurityAbility securityAbility) {
-            securityAbility.signAndEncrypt(map);
-        }
 
         String main = getDB().insertItem(getSchemaName(), getMainTable(), map);
 
@@ -65,10 +55,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
                     childrenAbility.putChildTableList(main, childAlias, list);
                 }
             });
-        }
-
-        if (this instanceof IDataBroadcastAbility dataBroadcastAbility) {
-            dataBroadcastAbility.broadcast(DataChangeChannel.Type.CREATE, main);
         }
 
         afterCreate(main);
@@ -102,14 +88,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
                 }
             }
 
-            if (this instanceof IDataCheckAbility dataCheckAbility) {
-                dataCheckAbility.check(map, false);
-            }
-
-            if (this instanceof ISecurityAbility securityAbility) {
-                securityAbility.signAndEncrypt(map);
-            }
-
             dataList.add(map);
         }
 
@@ -120,10 +98,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
         }
 
         idList.forEach(id -> {
-            if (this instanceof IDataBroadcastAbility dataBroadcastAbility) {
-                dataBroadcastAbility.broadcast(DataChangeChannel.Type.CREATE, id);
-            }
-
             afterCreate(id);
         });
 
@@ -151,25 +125,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
             body.put("t_update", now);
         }
 
-        if (this instanceof IRuntimeAbility ability) {
-            String moduleID = ability.getApiRequest().getModuleID();
-            IRuntimeUser user = ability.getApiRequest().getUser();
-            if (!body.containsKey("id_at_auth_user__create")) {
-                body.put("id_at_auth_user__create", user.getId());
-            }
-            if (!body.containsKey("id_at_auth_user__perms")) {
-                body.put("id_at_auth_user__perms", user.getId());
-            }
-            if (!body.containsKey("id_at_org_department__perms")) {
-                body.put("id_at_org_department__perms", user.getDepartmentId());
-            }
-            if (!body.containsKey("id_at_org_organization__perms")) {
-                body.put("id_at_org_organization__perms", user.getOrganizationId());
-            }
-            if (!body.containsKey("id_at_app_module__perms")) {
-                body.put("id_at_app_module__perms", moduleID);
-            }
-        }
 
         if (this instanceof ITreeAbility ability) {
             Column pidColumn = ability.getParentKeyColumn();
