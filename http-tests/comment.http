@@ -1,0 +1,34 @@
+# 请先在security.http中运行登录测试以获取token
+# 然后在infor-flow.http中创建一个帖子并获取postId
+
+### 创建评论
+# @name createComment
+POST {{baseUrl}}/api/comment/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "post_id": "{{postId}}",
+  "user_id": "{{userId}}",
+  "content": "这是一条测试评论。This is a test comment."
+}
+
+> {%
+    client.global.set("commentId", response.body.id);
+    client.log("Created Comment ID: " + response.body.id);
+%}
+
+### 获取所有评论
+GET {{baseUrl}}/api/comment/view
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 获取指定评论
+GET {{baseUrl}}/api/comment/view/{{commentId}}
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 删除评论
+GET {{baseUrl}}/api/comment/delete/{{commentId}}
+Content-Type: application/json
+Authorization: Bearer {{token}} 

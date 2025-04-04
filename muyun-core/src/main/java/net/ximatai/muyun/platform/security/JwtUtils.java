@@ -35,6 +35,7 @@ public class JwtUtils {
     
     private static final String PRIVATE_KEY_PATH = "privateKey.pem";
     private static final String PUBLIC_KEY_PATH = "publicKey.pem";
+    private static final String KEY_STORE_DIR = "keys";
 
     private static final List<String> ROLES = List.of("User");
     
@@ -56,22 +57,45 @@ public class JwtUtils {
      */
     static {
         try {
-            privateKey = loadPrivateKey();
-            publicKey = loadPublicKey();
+            loadOrGenerateKeys();
             LOG.info("RSA keys loaded successfully");
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Failed to load RSA keys", e);
         }
     }
+
+    /**
+     * 加载或生成RSA密钥对
+     */
+    private static void loadOrGenerateKeys() throws Exception {
+        Path keyStoreDir = Paths.get(KEY_STORE_DIR);
+        Path privateKeyPath = keyStoreDir.resolve(PRIVATE_KEY_PATH);
+        Path publicKeyPath = keyStoreDir.resolve(PUBLIC_KEY_PATH);
+
+        // 确保密钥存储目录存在
+        if (!Files.exists(keyStoreDir)) {
+            Files.createDirectories(keyStoreDir);
+        }
+
+        // 如果密钥文件不存在，从资源文件复制
+        if (!Files.exists(privateKeyPath) || !Files.exists(publicKeyPath)) {
+            String privateKeyPEM = readResourceFile(PRIVATE_KEY_PATH);
+            String publicKeyPEM = readResourceFile(PUBLIC_KEY_PATH);
+            
+            Files.writeString(privateKeyPath, privateKeyPEM);
+            Files.writeString(publicKeyPath, publicKeyPEM);
+        }
+
+        // 加载密钥
+        privateKey = loadPrivateKeyFromFile(privateKeyPath);
+        publicKey = loadPublicKeyFromFile(publicKeyPath);
+    }
     
     /**
-     * 加载私钥
-     * 
-     * @return 私钥对象
-     * @throws Exception 如果加载失败
+     * 从文件加载私钥
      */
-    private static PrivateKey loadPrivateKey() throws Exception {
-        String privateKeyPEM = readResourceFile(PRIVATE_KEY_PATH);
+    private static PrivateKey loadPrivateKeyFromFile(Path privateKeyPath) throws Exception {
+        String privateKeyPEM = Files.readString(privateKeyPath);
         privateKeyPEM = privateKeyPEM
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
@@ -86,13 +110,10 @@ public class JwtUtils {
     }
     
     /**
-     * 加载公钥
-     * 
-     * @return 公钥对象
-     * @throws Exception 如果加载失败
+     * 从文件加载公钥
      */
-    private static PublicKey loadPublicKey() throws Exception {
-        String publicKeyPEM = readResourceFile(PUBLIC_KEY_PATH);
+    private static PublicKey loadPublicKeyFromFile(Path publicKeyPath) throws Exception {
+        String publicKeyPEM = Files.readString(publicKeyPath);
         publicKeyPEM = publicKeyPEM
                 .replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
@@ -106,10 +127,6 @@ public class JwtUtils {
     
     /**
      * 读取资源文件内容
-     * 
-     * @param resourcePath 资源文件路径
-     * @return 文件内容
-     * @throws IOException 如果读取失败
      */
     private static String readResourceFile(String resourcePath) throws IOException {
         ClassLoader classLoader = JwtUtils.class.getClassLoader();
@@ -217,6 +234,32 @@ public class JwtUtils {
         } catch (Exception e) {
             LOG.log(Level.WARNING, "Token validation failed", e);
             return false;
+        }
+    }
+    
+    /**
+     * 检查令牌是否即将过期（默认5分钟内）
+     *
+     * @param token JWT令牌
+     * @return 如果令牌即将过期返回true，否则返回false
+     */
+    public static boolean isTokenAboutToExpire(JsonWebToken token) {
+        if (token == null) {
+            return true;
+        }
+
+        try {
+            // 获取过期时间
+            Instant expirationTime = Instant.ofEpochSecond(token.getExpirationTime());
+            if (expirationTime == null) {
+                return false; // 永不过期的令牌
+            }
+            
+            // 如果过期时间在5分钟内，认为即将过期
+            return Instant.now().plus(Duration.ofMinutes(5)).isAfter(expirationTime);
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "Token expiration check failed", e);
+            return true; // 如果检查失败，建议刷新令牌
         }
     }
 

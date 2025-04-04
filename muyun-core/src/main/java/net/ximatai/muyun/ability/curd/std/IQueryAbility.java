@@ -1,5 +1,6 @@
 package net.ximatai.muyun.ability.curd.std;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -29,6 +30,7 @@ public interface IQueryAbility extends ISelectAbility {
     @GET
     @Path("/queryColumns")
     @Operation(summary = "已配置可供查询的字段")
+    @RolesAllowed("user")
     default List<QueryItem> queryColumns() {
         return queryItemList().stream().filter(item -> !item.isHide()).collect(Collectors.toList());
     }
@@ -36,6 +38,7 @@ public interface IQueryAbility extends ISelectAbility {
     @POST
     @Path("/view")
     @Operation(summary = "分页查询（带查询条件）")
+    @RolesAllowed("user")
     default PageResult view(@Parameter(description = "页码") @QueryParam("page") Integer page,
                             @Parameter(description = "分页大小") @QueryParam("size") Long size,
                             @Parameter(description = "是否分页") @QueryParam("noPage") Boolean noPage,

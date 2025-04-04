@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vert.x EventBus with SockJS</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1.6.1/dist/sockjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vertx3-eventbus-client/vertx-eventbus.min.js"></script>
+</head>
+<body>
+<h1>EventBus Message Listener</h1>
+<div>
+    <p>Messages from server:</p>
+    <pre id="messageLog"></pre>
+</div>
+
+<script>
+    var options = {
+        // 配置 SockJS 的传输方式优先级，优先使用 XHR 流和 XHR 轮询
+        // transports: ['xhr-streaming', 'xhr-polling', 'jsonp-polling']
+    };
+
+    // SockJS 连接到服务器的 EventBus
+    var eventBus = new EventBus('/api/eventbus',options);
+
+    eventBus.enableReconnect(true)
+
+    // 连接时的回调函数
+    eventBus.onopen = function () {
+        console.log("Connected to EventBus");
+
+        // 注册消息处理器，监听来自服务器的 "news-feed" 消息
+        eventBus.registerHandler("data.change.platform.org_organization", function (error, message) {
+            if (error) {
+                console.error('Error receiving message:', error);
+            } else {
+                console.log("Received message from server: ", message.body);
+
+                var str = message.body.id + "[" +  message.body.type +"]"
+                // 将消息显示到页面中
+                document.getElementById('messageLog').innerText += str + '\n';
+            }
+        });
+    };
+
+    // 关闭连接时的回调函数
+    eventBus.onclose = function () {
+        console.log("EventBus connection closed");
+    };
+</script>
+</body>
+</html>

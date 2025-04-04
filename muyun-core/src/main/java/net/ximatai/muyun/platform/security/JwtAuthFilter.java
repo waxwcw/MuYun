@@ -34,6 +34,8 @@ public class JwtAuthFilter implements ContainerRequestFilter {
     private static final List<String> WHITELIST_PATHS = Arrays.asList(
             "/api/security/oauth",
             "/api/security/isValidToken",
+            "/api/security/refreshToken",
+            "/api/security/checkTokenExpiration",
             "/api/user/create"
     );
 

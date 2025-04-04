@@ -1,0 +1,71 @@
+# @name login
+POST {{baseUrl}}/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "000000",
+    "password": "123456"
+}
+
+
+###
+# @name loginAlternate
+POST {{baseUrl}}/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "11111",
+    "password": "123456"
+}
+
+
+### 用户登录 - 失败（用户不存在）
+POST {{baseUrl}}/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "nonexistent",
+    "password": "123456"
+}
+
+### 用户登录 - 失败（密码错误）
+POST {{baseUrl}}/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "00000",
+    "password": "wrongpassword"
+}
+
+### 用户登录 - 失败（缺少参数）
+POST {{baseUrl}}/api/security/oauth
+Content-Type: application/json
+
+{
+    "account": "00000"
+}
+
+### 验证Token
+POST {{baseUrl}}/api/security/isValidToken
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 检查Token是否即将过期
+POST {{baseUrl}}/api/security/checkTokenExpiration
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 刷新Token
+POST {{baseUrl}}/api/security/refreshToken
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+> {%
+    client.global.set("token", response.body.token);
+    client.log("Refreshed Token: " + response.body.token);
+%}
+
+### 用户登出
+POST {{baseUrl}}/api/security/logout
+Content-Type: application/json
+Authorization: Bearer {{token}} 

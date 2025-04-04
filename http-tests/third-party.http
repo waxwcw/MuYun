@@ -1,0 +1,32 @@
+# 融云和其他第三方服务测试
+
+### 测试获取融云Token
+POST {{baseUrl}}/api/config/getRongCloudToken
+Content-Type: application/json
+
+{
+  "userId": "{{userId}}",
+  "name": "{{username}}",
+  "avatar_url": "https://example.com/avatar.jpg"
+}
+
+### 获取融云Token（手动参数）
+POST {{baseUrl}}/api/config/getRongCloudToken
+Content-Type: application/json
+
+{
+  "userId": "test_user_123",
+  "name": "测试用户",
+  "avatar_url": "https://example.com/avatar.jpg"
+}
+
+### 融云API示例 - 获取Token
+POST https://api.sg-light-api.com/user/getToken.json HTTP/1.1
+Host: api.sg-light-api.com
+App-Key: c9kqb3rdcfnzj
+Nonce: 1439128942
+Timestamp: 1743521782
+Signature: 9bb652de40ba32acea45f1f85ee6f0e7f3474ce4
+Content-Type: application/x-www-form-urlencoded
+
+userId=test&name=test&portraitUri=https://kfzbbsfwgryevuwawghs.supabase.co/storage/v1/object/public/questsync-imgs/avatar/5c8b01a9-8985-4fd4-9209-2cd33f8f4938/default_avatar.png 

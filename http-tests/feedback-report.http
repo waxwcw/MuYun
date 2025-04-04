@@ -1,0 +1,24 @@
+# 请先在security.http中运行登录测试以获取token
+
+### 创建举报
+POST {{baseUrl}}/api/report/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "reporter_id": "{{userId}}",
+    "reported_type": "post",
+    "reported_id": "{{postId}}",
+    "reason": "测试举报功能"
+}
+
+### 创建反馈
+POST {{baseUrl}}/api/feedback/create
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "user_id": "{{userId}}",
+    "question_id": "{{postId}}",
+    "content": "这是一条测试反馈"
+} 

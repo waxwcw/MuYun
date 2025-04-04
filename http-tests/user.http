@@ -1,0 +1,33 @@
+# 请先在security.http中运行登录测试以获取token
+
+### 创建用户0
+POST {{baseUrl}}/api/user/create
+Content-Type: application/json
+
+{
+    "account": "00000",
+    "nickname": "测试用户0",
+    "avatar_url": "https://example.com/avatar.png",
+    "password": "123456"
+}
+
+### 创建用户1
+POST {{baseUrl}}/api/user/create
+Content-Type: application/json
+
+{
+    "account": "test@cc.com",
+    "nickname": "测试用户1",
+    "avatar_url": "https://example.com/avatar.png",
+    "password": "123456"
+}
+
+### 创建缺少密码的用户2
+POST {{baseUrl}}/api/user/create
+Content-Type: application/json
+
+{
+    "account": "22222",
+    "nickname": "测试用户2",
+    "avatar_url": "https://example.com/avatar.png"
+} 

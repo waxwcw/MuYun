@@ -15,13 +15,23 @@ import java.util.List;
 import java.util.Map;
 
 public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
+
+
+    default void beforeCreate(Map body) {
+
+    }
+
+    default void afterCreate(String id) {
+
+    }
+
     @POST
     @Path("/create")
     @Transactional
     @Operation(summary = "新增数据", description = "返回新增数据ID")
     @RolesAllowed("user")
     default String create(Map body) {
-
+        beforeCreate(body);
         HashMap map = new HashMap<>(body);
         fitOutDefaultValue(map);
 
@@ -44,7 +54,7 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
                 }
             });
         }
-
+        afterCreate(main);
         return main;
     }
 

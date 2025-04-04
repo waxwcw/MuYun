@@ -1,0 +1,53 @@
+muyun:
+  use-session: true
+file-server:
+  upload-path: ./fileUploads/
+web:
+  redirects:
+    - from: /
+      to: /web/
+frontend:
+  resources:
+    - prefix: /web/
+      path: /Users/aruis/develop/workspace-bsy/unicom_xinan_project/dist
+proxy:
+  upstreams:
+    - prefix: /web1/
+      #      url: http://192.168.3.9:8089/web/
+      url: http://127.0.0.1:8001/web/
+quarkus:
+  http:
+    port: 8080
+    # root-path: /api
+  rest:
+    path: /api
+
+  datasource:
+    db-kind: postgresql
+    username: postgres
+    password: muyun2024
+    jdbc:
+      url: jdbc:postgresql://localhost:54324/muyun
+
+  banner:
+    path: banner.txt
+
+  log:
+    category:
+      "org.jdbi":
+        level: DEBUG
+
+    level: INFO
+    console:
+      enable: true
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{3.}] (%t) %s%e%n"
+    file:
+      enable: true
+      path: logs/muyun.log
+      level: DEBUG
+      format: "%d{yyyy-MM-dd HH:mm:ss} %-5p [%c{3.}] (%t) %s%e%n"
+      rotation:
+        file-suffix: .yyyy-MM-dd
+        rotate-on-boot: true
+        max-backup-index: 7
+#  profile: test
