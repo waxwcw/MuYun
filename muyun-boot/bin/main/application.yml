@@ -1,7 +1,7 @@
 muyun:
   # 全局JWT认证开关，默认开启
   # 设置为false时，所有API请求都视为白名单用户，无需认证
-  enable-jwt-auth: true
+  enable-jwt-auth: false
 file-server:
   upload-path: ./fileUploads/
 web:
