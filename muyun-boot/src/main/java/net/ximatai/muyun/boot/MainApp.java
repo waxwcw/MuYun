@@ -14,12 +14,12 @@ public class MainApp implements QuarkusApplication, IProfile {
 
     private final Logger logger = LoggerFactory.getLogger(MainApp.class);
 
-//    @Inject
-//    MuYunConfig config;
+    @Inject
+    MuYunConfig config;
 
     @Override
     public int run(String... args) {
-        logger.info("PROFILE ON {}", profile());
+        logger.info("PROFILE ON {}", config.profile());
         Quarkus.waitForExit();
         return 0;
     }
