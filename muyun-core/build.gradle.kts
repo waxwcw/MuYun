@@ -19,7 +19,6 @@ dependencies {
     api("io.quarkus:quarkus-smallrye-jwt-build")
 
     api(libs.commons.codes)
-    api(libs.bcprov)
     api(libs.caffeine)
 
     testImplementation("io.quarkus:quarkus-junit5")
