@@ -8,28 +8,22 @@ Authorization: Bearer {{token}}
 {
     "user_id": "{{userId}}",
     "content": "这是一个测试帖子，包含图片。",
-    "type": "question",
+    "type": "问答",
     "images": [
         "https://example.com/image1.png",
         "https://example.com/image2.png"
     ]
 }
 
-> {%
-    client.global.set("postId", response.body.id);
-    client.log("Created Post ID: " + response.body.id);
-%}
-
-### 创建未指定用户ID的帖子（会使用token中的用户）
+###
 POST {{baseUrl}}/api/infor-flow/create
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "content": "这个帖子没有指定user_id，将使用token中的用户ID。",
-    "images": [
-        "https://example.com/image1.png"
-    ]
+    "user_id": "{{userId}}",
+    "type": "经验",
+    "content": "帖子"
 }
 
 ### 创建没有图片的帖子
@@ -53,7 +47,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "content": "帖子"
+    "content": "test"
 } 
 
 

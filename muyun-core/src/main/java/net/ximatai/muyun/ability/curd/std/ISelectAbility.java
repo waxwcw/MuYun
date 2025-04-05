@@ -118,7 +118,7 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
     @GET
     @Path("/view/{id}")
     @Operation(summary = "查看指定的数据")
-    @RolesAllowed("user")
+//    @RolesAllowed("user")
     default Map<String, Object> view(@PathParam("id") String id) {
         Map<String, Object> row = getDB().row(getSelectOneRowSql(), Map.of("id", id));
 
@@ -131,7 +131,7 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
     @GET
     @Path("/view")
     @Operation(summary = "分页查询")
-    @RolesAllowed("user")
+//    @RolesAllowed("user")
     default PageResult view(@Parameter(description = "页码") @QueryParam("page") Integer page,
                             @Parameter(description = "分页大小") @QueryParam("size") Long size,
                             @Parameter(description = "是否分页") @QueryParam("noPage") Boolean noPage,

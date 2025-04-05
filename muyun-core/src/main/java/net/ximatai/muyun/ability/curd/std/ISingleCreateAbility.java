@@ -29,7 +29,7 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
     @Path("/create")
     @Transactional
     @Operation(summary = "新增数据", description = "返回新增数据ID")
-    @RolesAllowed("user")
+//    @RolesAllowed("user")
     default String create(Map body) {
         beforeCreate(body);
         HashMap map = new HashMap<>(body);

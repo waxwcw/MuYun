@@ -15,9 +15,19 @@ POST {{baseUrl}}/api/config/getRongCloudToken
 Content-Type: application/json
 
 {
-  "userId": "test_user_123",
-  "name": "测试用户",
+  "userId": "58a6ce55-613a-445a-997f-77d6dc7bbd45",
+  "name": "测试用户0",
   "avatar_url": "https://example.com/avatar.jpg"
+}
+
+### 获取融云Token（手动参数）
+POST {{baseUrl}}/api/config/getRongCloudToken
+Content-Type: application/json
+
+{
+    "userId": "58a6ce55-613a-445a-997f-77d6dc7bbd45",
+    "name": "测试用户1",
+    "avatar_url": "https://kfzbbsfwgryevuwawghs.supabase.co/storage/v1/object/public/questsync-imgs/avatar/5c8b01a9-8985-4fd4-9209-2cd33f8f4938/default_avatar.png"
 }
 
 ### 融云API示例 - 获取Token

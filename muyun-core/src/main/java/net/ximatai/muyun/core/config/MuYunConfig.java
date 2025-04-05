@@ -16,6 +16,14 @@ public interface MuYunConfig extends IProfile {
 
     @WithDefault("false")
     boolean useSession();
+    
+    /**
+     * 是否启用JWT认证
+     * 设置为false时，所有API请求都视为白名单用户，无需认证
+     * 默认为true，启用JWT认证
+     */
+    @WithDefault("true")
+    boolean enableJwtAuth();
 
     default boolean isSuperUser(String userID) {
         Objects.requireNonNull(userID, "请提供测试用户ID");

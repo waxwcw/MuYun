@@ -103,7 +103,8 @@ public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, I
     public List<QueryItem> queryItemList() {
         return List.of(
             QueryItem.of("content").setSymbolType(QueryItem.SymbolType.LIKE),
-            QueryItem.of("type").setSymbolType(QueryItem.SymbolType.EQUAL)
+            QueryItem.of("type").setSymbolType(QueryItem.SymbolType.EQUAL),
+            QueryItem.of("user_id").setSymbolType(QueryItem.SymbolType.EQUAL)
         );
     }
 

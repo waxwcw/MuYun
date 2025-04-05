@@ -13,6 +13,7 @@ import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.ext.Provider;
 import net.ximatai.muyun.MuYunConst;
+import net.ximatai.muyun.core.config.MuYunConfig;
 import net.ximatai.muyun.model.IRuntimeUser;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
@@ -42,6 +43,9 @@ public class JwtAuthFilter implements ContainerRequestFilter {
     @Inject
     JsonWebToken jwt;
 
+    @Inject
+    MuYunConfig config;
+
     @Context
     RoutingContext routingContext;
 
@@ -49,6 +53,13 @@ public class JwtAuthFilter implements ContainerRequestFilter {
     public void filter(ContainerRequestContext requestContext) {
         HttpServerRequest request = routingContext.request();
         String path = request.path();
+        
+        // 全局JWT认证开关：如果禁用了JWT认证，所有请求都视为白名单用户
+        if (!config.enableJwtAuth()) {
+            LOG.debug("JWT authentication is disabled globally");
+            routingContext.put(MuYunConst.CONTEXT_KEY_RUNTIME_USER, IRuntimeUser.WHITE);
+            return;
+        }
         
         // 如果是白名单路径，不需要认证
         if (WHITELIST_PATHS.stream().anyMatch(path::startsWith)) {
@@ -62,7 +73,6 @@ public class JwtAuthFilter implements ContainerRequestFilter {
             routingContext.put(MuYunConst.CONTEXT_KEY_RUNTIME_USER, IRuntimeUser.WHITE);
             return;
         }
-
         
         // 从令牌中提取用户信息并设置到上下文中
         IRuntimeUser user = JwtUtils.extractUser(jwt);

@@ -24,9 +24,13 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### 获取指定评论
-GET {{baseUrl}}/api/comment/view/{{commentId}}
+POST {{baseUrl}}/api/comment/view/
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+{
+    "post_id": "9368f0e5-5378-48cf-9614-8e400d26984e"
+}
 
 ### 删除评论
 GET {{baseUrl}}/api/comment/delete/{{commentId}}
