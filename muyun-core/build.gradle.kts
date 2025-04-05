@@ -7,7 +7,6 @@ dependencies {
     api(enforcedPlatform(libs.quarkus.platform.bom))
 
     api(project(":muyun-database"))
-//    api(project(":muyun-fileserver"))
 
     api("io.quarkus:quarkus-rest")
     api("io.quarkus:quarkus-arc")
