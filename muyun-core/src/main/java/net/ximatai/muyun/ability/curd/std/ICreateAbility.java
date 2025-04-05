@@ -126,12 +126,12 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
         }
 
 
-        if (this instanceof ITreeAbility ability) {
-            Column pidColumn = ability.getParentKeyColumn();
-            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
-                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
-            }
-        }
+//        if (this instanceof ITreeAbility ability) {
+//            Column pidColumn = ability.getParentKeyColumn();
+//            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
+//                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
+//            }
+//        }
 
     }
 

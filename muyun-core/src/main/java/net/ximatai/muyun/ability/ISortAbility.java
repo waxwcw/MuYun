@@ -55,16 +55,16 @@ public interface ISortAbility extends ISelectAbility, IUpdateAbility {
         String condition = "";
         HashMap<String, Object> params = new HashMap<>();
 
-        if (this instanceof ITreeAbility treeAbility) { // tree结构，要支持 parentId 的设置
-            if (parentId == null || parentId.isEmpty()) {
-                parentId = treeAbility.getParentKeyColumn().getDefaultValue().toString();
-            }
-
-            String parentKey = treeAbility.getParentKeyColumn().getName();
-            body.put(parentKey, parentId);
-            condition = " and " + parentKey + " = :pid ";
-            params.put("pid", parentId);
-        }
+//        if (this instanceof ITreeAbility treeAbility) { // tree结构，要支持 parentId 的设置
+//            if (parentId == null || parentId.isEmpty()) {
+//                parentId = treeAbility.getParentKeyColumn().getDefaultValue().toString();
+//            }
+//
+//            String parentKey = treeAbility.getParentKeyColumn().getName();
+//            body.put(parentKey, parentId);
+//            condition = " and " + parentKey + " = :pid ";
+//            params.put("pid", parentId);
+//        }
 
         int resCount = this.getDB().updateItem(getSchemaName(), getMainTable(), body);
 

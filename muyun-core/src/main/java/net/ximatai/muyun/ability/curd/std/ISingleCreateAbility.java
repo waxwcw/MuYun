@@ -65,12 +65,12 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
             body.put("t_update", now);
         }
 
-        if (this instanceof ITreeAbility ability) {
-            Column pidColumn = ability.getParentKeyColumn();
-            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
-                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
-            }
-        }
+//        if (this instanceof ITreeAbility ability) {
+//            Column pidColumn = ability.getParentKeyColumn();
+//            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
+//                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
+//            }
+//        }
 
     }
 }

@@ -33,9 +33,9 @@ public interface ITableCreateAbility extends IMetadataAbility {
 
         fitOut(wrapper);
 
-        if (this instanceof ITreeAbility ability) {
-            wrapper.addColumn(ability.getParentKeyColumn());
-        }
+//        if (this instanceof ITreeAbility ability) {
+//            wrapper.addColumn(ability.getParentKeyColumn());
+//        }
         if (this instanceof ISortAbility ability) {
             wrapper.addColumn(ability.getSortColumn().getColumn());
         }

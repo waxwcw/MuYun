@@ -3,7 +3,7 @@ POST {{baseUrl}}/api/security/oauth
 Content-Type: application/json
 
 {
-    "account": "000000",
+    "account": "test@cc.com",
     "password": "123456"
 }
 

@@ -57,5 +57,5 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-    "type": "question"
+    "type": "问答"
 }

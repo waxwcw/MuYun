@@ -144,14 +144,14 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
      */
     default String getAuthCondition() {
         String authCondition = "";
-        if (this instanceof IAuthAbility authAbility) {
-            ApiRequest apiRequest = authAbility.getApiRequest();
-
-            if (apiRequest.getAuthCondition() != null) {
-                authCondition = apiRequest.getAuthCondition();
-                apiRequest.setAuthCondition(null); // 权限条件不会被多次使用
-            }
-        }
+//        if (this instanceof IAuthAbility authAbility) {
+//            ApiRequest apiRequest = authAbility.getApiRequest();
+//
+//            if (apiRequest.getAuthCondition() != null) {
+//                authCondition = apiRequest.getAuthCondition();
+//                apiRequest.setAuthCondition(null); // 权限条件不会被多次使用
+//            }
+//        }
         return authCondition;
     }
 
