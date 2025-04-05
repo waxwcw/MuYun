@@ -36,11 +36,6 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
             return ability.getSortColumn();
         }
 
-        if (this instanceof ICodeGenerateAbility ability
-            && ability.getCodeColumn().equals(SortColumn.CODE.getColumnName())) {
-            return SortColumn.CODE;
-        }
-
         if (checkColumn(SortColumn.ORDER.getColumnName())) {
             return SortColumn.ORDER;
         }

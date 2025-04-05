@@ -37,14 +37,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
         HashMap map = new HashMap<>(body);
         fitOutDefaultValue(map);
 
-        if (this instanceof ICodeGenerateAbility ability) {
-            String codeColumn = ability.getCodeColumn();
-            String code = (String) map.get(codeColumn);
-            if (code == null || code.isBlank()) {
-                map.put(codeColumn, ability.generateCode(body));
-            }
-        }
-
 
         String main = getDB().insertItem(getSchemaName(), getMainTable(), map);
 
@@ -69,24 +61,9 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
 
         List<Map<String, ?>> dataList = new ArrayList<>();
 
-        List<String> codeList = null;
-
-        if (this instanceof ICodeGenerateAbility ability) {
-            codeList = ability.generate(list);
-        }
-
         for (int i = 0; i < list.size(); i++) {
             Map map = new HashMap<>(list.get(i));
             fitOutDefaultValue(map);
-
-            if (codeList != null) {
-                ICodeGenerateAbility ability = (ICodeGenerateAbility) this;
-                String codeColumn = ability.getCodeColumn();
-                String code = (String) map.get(codeColumn);
-                if (code == null || code.isBlank()) {
-                    map.put(codeColumn, codeList.get(i));
-                }
-            }
 
             dataList.add(map);
         }

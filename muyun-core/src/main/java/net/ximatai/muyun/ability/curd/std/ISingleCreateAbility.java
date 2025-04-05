@@ -35,15 +35,6 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
         HashMap map = new HashMap<>(body);
         fitOutDefaultValue(map);
 
-        if (this instanceof ICodeGenerateAbility ability) {
-            String codeColumn = ability.getCodeColumn();
-            String code = (String) map.get(codeColumn);
-            if (code == null || code.isBlank()) {
-                map.put(codeColumn, ability.generateCode(body));
-            }
-        }
-
-
         String main = getDB().insertItem(getSchemaName(), getMainTable(), map);
 
         if (this instanceof IChildrenAbility childrenAbility) {
