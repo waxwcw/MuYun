@@ -1,6 +1,5 @@
-package net.ximatai.muyun.utils;
+package net.ximatai.muyun.util;
 
-import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.core.Response;
 import net.ximatai.muyun.model.ApiResponse;
 

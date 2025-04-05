@@ -1,16 +1,13 @@
-package net.ximatai.muyun.platform.config;
+package net.ximatai.muyun.platform.controller;
 
 
 import io.quarkus.runtime.Startup;
-import io.quarkus.vertx.web.Param;
 import io.vertx.core.json.JsonObject;
-import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.base.BaseScaffold;
 import net.ximatai.muyun.core.Scaffold;
-import net.ximatai.muyun.utils.ResponseUtil;
+import net.ximatai.muyun.util.ResponseUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.net.URI;

@@ -1,14 +1,10 @@
-package net.ximatai.muyun.platform.report;
+package net.ximatai.muyun.platform.controller;
 
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
-import jakarta.transaction.Transactional;
-import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import net.ximatai.muyun.ability.curd.std.ISingleCreateAbility;
-import net.ximatai.muyun.core.Scaffold;
 import net.ximatai.muyun.database.IDatabaseOperations;
-import org.eclipse.microprofile.openapi.annotations.Operation;
 
 @Startup
 @Path("report")

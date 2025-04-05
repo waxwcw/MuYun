@@ -3,7 +3,7 @@ package net.ximatai.muyun.platform.controller;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.utils.ResponseUtil;
+import net.ximatai.muyun.util.ResponseUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 /**

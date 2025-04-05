@@ -1,4 +1,4 @@
-package net.ximatai.muyun.platform.security;
+package net.ximatai.muyun.util;
 
 import io.smallrye.jwt.build.Jwt;
 import io.vertx.core.json.JsonObject;
@@ -29,9 +29,9 @@ import java.util.logging.Logger;
 /**
  * JWT工具类，用于生成和验证JWT令牌
  */
-public class JwtUtils {
+public class JwtUtil {
     
-    private static final Logger LOG = Logger.getLogger(JwtUtils.class.getName());
+    private static final Logger LOG = Logger.getLogger(JwtUtil.class.getName());
     
     private static final String PRIVATE_KEY_PATH = "privateKey.pem";
     private static final String PUBLIC_KEY_PATH = "publicKey.pem";
@@ -129,7 +129,7 @@ public class JwtUtils {
      * 读取资源文件内容
      */
     private static String readResourceFile(String resourcePath) throws IOException {
-        ClassLoader classLoader = JwtUtils.class.getClassLoader();
+        ClassLoader classLoader = JwtUtil.class.getClassLoader();
         try (InputStream inputStream = classLoader.getResourceAsStream(resourcePath)) {
             if (inputStream == null) {
                 throw new IOException("Resource not found: " + resourcePath);

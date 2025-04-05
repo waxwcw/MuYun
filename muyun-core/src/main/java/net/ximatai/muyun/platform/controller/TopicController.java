@@ -1,4 +1,4 @@
-package net.ximatai.muyun.platform.topic;
+package net.ximatai.muyun.platform.controller;
 
 import io.quarkus.runtime.Startup;
 import jakarta.transaction.Transactional;

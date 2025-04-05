@@ -1,6 +1,5 @@
-package net.ximatai.muyun.platform.security;
+package net.ximatai.muyun.platform.filter;
 
-import io.quarkus.security.UnauthorizedException;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.ext.web.RoutingContext;
 import jakarta.annotation.Priority;
@@ -15,6 +14,7 @@ import jakarta.ws.rs.ext.Provider;
 import net.ximatai.muyun.MuYunConst;
 import net.ximatai.muyun.core.config.MuYunConfig;
 import net.ximatai.muyun.model.IRuntimeUser;
+import net.ximatai.muyun.util.JwtUtil;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.jboss.logging.Logger;
 
@@ -75,7 +75,7 @@ public class JwtAuthFilter implements ContainerRequestFilter {
         }
         
         // 从令牌中提取用户信息并设置到上下文中
-        IRuntimeUser user = JwtUtils.extractUser(jwt);
+        IRuntimeUser user = JwtUtil.extractUser(jwt);
         routingContext.put(MuYunConst.CONTEXT_KEY_RUNTIME_USER, user);
         
         LOG.debug("User authenticated: " + user.getUsername());

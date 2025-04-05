@@ -1,4 +1,4 @@
-package net.ximatai.muyun.platform.security;
+package net.ximatai.muyun.platform.controller;
 
 import io.quarkus.runtime.Startup;
 import io.vertx.core.json.JsonObject;
@@ -8,13 +8,11 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.MuYunConst;
 import net.ximatai.muyun.ability.IRuntimeAbility;
 import net.ximatai.muyun.model.ApiRequest;
-import net.ximatai.muyun.model.ApiResponse;
 import net.ximatai.muyun.model.IRuntimeUser;
-import net.ximatai.muyun.platform.user.UserController;
-import net.ximatai.muyun.utils.ResponseUtil;
+import net.ximatai.muyun.util.JwtUtil;
+import net.ximatai.muyun.util.ResponseUtil;
 import org.eclipse.microprofile.jwt.JsonWebToken;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.media.Content;
@@ -90,7 +88,7 @@ public class SecurityController implements IRuntimeAbility {
             );
             
             // 生成JWT令牌
-            String token = JwtUtils.generateToken(user);
+            String token = JwtUtil.generateToken(user);
             
             // 构建返回数据
             JsonObject result = new JsonObject()
