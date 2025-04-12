@@ -5,8 +5,6 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import net.ximatai.muyun.ability.*;
 import net.ximatai.muyun.core.exception.MuYunException;
-import net.ximatai.muyun.database.builder.Column;
-import net.ximatai.muyun.util.StringUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.time.LocalDateTime;
@@ -36,19 +34,7 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
         beforeCreate(body);
         HashMap map = new HashMap<>(body);
         fitOutDefaultValue(map);
-
-
         String main = getDB().insertItem(getSchemaName(), getMainTable(), map);
-
-        if (this instanceof IChildrenAbility childrenAbility) {
-            childrenAbility.getChildren().forEach(childTableInfo -> {
-                String childAlias = childTableInfo.getChildAlias();
-                if (body.containsKey(childAlias) && body.get(childAlias) instanceof List<?> list) {
-                    childrenAbility.putChildTableList(main, childAlias, list);
-                }
-            });
-        }
-
         afterCreate(main);
         return main;
     }
@@ -78,20 +64,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
             afterCreate(id);
         });
 
-        if (this instanceof IChildrenAbility childrenAbility) {
-            int i = 0;
-            for (Map body : list) {
-                int finalI = i;
-                childrenAbility.getChildren().forEach(childTableInfo -> {
-                    String childAlias = childTableInfo.getChildAlias();
-                    if (body.containsKey(childAlias) && body.get(childAlias) instanceof List<?> childrenList) {
-                        childrenAbility.putChildTableList(idList.get(finalI), childAlias, childrenList);
-                    }
-                });
-                i++;
-            }
-        }
-
         return idList;
     }
 
@@ -101,15 +73,6 @@ public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
             body.put("t_create", now);
             body.put("t_update", now);
         }
-
-
-//        if (this instanceof ITreeAbility ability) {
-//            Column pidColumn = ability.getParentKeyColumn();
-//            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
-//                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
-//            }
-//        }
-
     }
 
 }

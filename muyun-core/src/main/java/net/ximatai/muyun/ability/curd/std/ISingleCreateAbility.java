@@ -37,14 +37,6 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
 
         String main = getDB().insertItem(getSchemaName(), getMainTable(), map);
 
-        if (this instanceof IChildrenAbility childrenAbility) {
-            childrenAbility.getChildren().forEach(childTableInfo -> {
-                String childAlias = childTableInfo.getChildAlias();
-                if (body.containsKey(childAlias) && body.get(childAlias) instanceof List<?> list) {
-                    childrenAbility.putChildTableList(main, childAlias, list);
-                }
-            });
-        }
         afterCreate(main);
         return main;
     }
@@ -55,13 +47,5 @@ public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbil
             body.put("t_create", now);
             body.put("t_update", now);
         }
-
-//        if (this instanceof ITreeAbility ability) {
-//            Column pidColumn = ability.getParentKeyColumn();
-//            if (StringUtil.isBlank(body.get(pidColumn.getName()))) {
-//                body.put(pidColumn.getName(), pidColumn.getDefaultValue());
-//            }
-//        }
-
     }
 }

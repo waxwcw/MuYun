@@ -2,16 +2,6 @@ muyun:
   # 全局JWT认证开关，默认开启
   # 设置为false时，所有API请求都视为白名单用户，无需认证
   enable-jwt-auth: false
-file-server:
-  upload-path: ./fileUploads/
-web:
-  redirects:
-    - from: /
-      to: /web/
-frontend:
-  resources:
-    - prefix: /web/
-      path: /Users/aruis/develop/workspace-bsy/unicom_xinan_project/dist
 proxy:
   upstreams:
     - prefix: /web1/
@@ -31,9 +21,6 @@ quarkus:
     jdbc:
       url: jdbc:postgresql://localhost:54324/muyun
 
-  banner:
-    path: banner.txt
-
   log:
     category:
       "org.jdbi":
@@ -52,4 +39,3 @@ quarkus:
         file-suffix: .yyyy-MM-dd
         rotate-on-boot: true
         max-backup-index: 7
-#  profile: test

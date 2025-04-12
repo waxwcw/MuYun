@@ -51,7 +51,9 @@ public class ProgressController implements ICreateAbility, IQueryAbility, IRefer
         return Arrays.asList(
             QueryItem.of("user_id").setSymbolType(QueryItem.SymbolType.EQUAL),
             QueryItem.of("wrong_count").setSymbolType(QueryItem.SymbolType.GREATER_THAN),
-            QueryItem.of("is_favorite").setSymbolType(QueryItem.SymbolType.EQUAL)
+            QueryItem.of("is_favorite").setSymbolType(QueryItem.SymbolType.EQUAL),
+            QueryItem.of("category_name").setSymbolType(QueryItem.SymbolType.LIKE),
+            QueryItem.of("content").setSymbolType(QueryItem.SymbolType.LIKE)
         );
     }
     

@@ -8,11 +8,9 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import net.ximatai.muyun.ability.IChildrenAbility;
 import net.ximatai.muyun.ability.IReferenceAbility;
 import net.ximatai.muyun.ability.curd.std.*;
 import net.ximatai.muyun.database.IDatabaseOperations;
-import net.ximatai.muyun.model.ChildTableInfo;
 import net.ximatai.muyun.model.QueryItem;
 import net.ximatai.muyun.model.ReferenceInfo;
 
@@ -24,7 +22,7 @@ import java.util.Map;
 
 @Startup
 @Path("infor-flow")
-public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, ICustomSelectSqlAbility ,IQueryAbility, IReferenceAbility, IChildrenAbility {
+public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, ICustomSelectSqlAbility ,IQueryAbility, IReferenceAbility {
 
 
     @Inject
@@ -117,11 +115,6 @@ public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, I
                 .add("nickname","nickname")
                 .add("avatar_url","avatar_url")
         );
-    }
-
-    @Override
-    public List<ChildTableInfo> getChildren() {
-        return List.of();
     }
     
     /**
