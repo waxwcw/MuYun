@@ -307,85 +307,26 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
                     part.append(" like ? ");
                     params.add("%" + v + "%");
                     break;
-                case IN, NOT_IN:
-                    if (!(v instanceof List list)) {
-                        throw new QueryException("IN 条件的值必须是列表");
-                    }
-
-                    if (list.isEmpty()) {
-                        list.add("muyuntage_20240903_nanjing");
-                    }
-
-                    String symbol = qi.getSymbolType().equals(QueryItem.SymbolType.IN) ? "in" : "not in";
-                    part.append(" %s (%s) ".formatted(symbol, list.stream().map(x -> "?").collect(Collectors.joining(","))));
-                    params.addAll(list);
-                    break;
                 case EQUAL, NOT_EQUAL:
                     String notMark = symbolType.equals(QueryItem.SymbolType.NOT_EQUAL) ? "!" : "";
                     part.append(" %s= ? ".formatted(notMark));
                     params.add(v);
                     break;
-                case PG_ARRAY_EQUAL, PG_ARRAY_OVERLAP, PG_ARRAY_CONTAIN, PG_ARRAY_BE_CONTAIN:
-                    if (!(v instanceof List list)) {
-                        throw new QueryException("数据比较时参数也应为数组");
-                    }
-
-                    String s = "=";
-                    if (symbolType.equals(QueryItem.SymbolType.PG_ARRAY_OVERLAP)) {
-                        s = "&&";
-                    }
-                    if (symbolType.equals(QueryItem.SymbolType.PG_ARRAY_CONTAIN)) {
-                        s = "<@";
-                    }
-                    if (symbolType.equals(QueryItem.SymbolType.PG_ARRAY_BE_CONTAIN)) {
-                        s = "@>";
-                    }
-
-                    String type = "varchar";
-
-                    if (!list.isEmpty() && list.get(0) instanceof Integer) {
-                        type = "int";
-                    }
-
-                    part.append(" %s ? ".formatted(s));
-                    params.add(getDB().createArray(list, type));
+                case GREATER_THAN:
+                    part.append(" > ? ");
+                    params.add(v);
                     break;
-                case RANGE:
-                    if (!(v instanceof List list) || list.size() != 2) {
-                        throw new QueryException("区间查询%s的内容必须是长度为2的数组".formatted(qi.getAlias()));
-                    }
-
-                    Object a = list.get(0);
-                    Object b = list.get(1);
-
-                    if (a == null) {
-                        part.append(" = %s ".formatted(qi.getColumn()));
-                    } else {
-                        part.append(" >= ? ");
-                        params.add(a);
-                    }
-
-                    if (b != null) {
-                        part.append(" and %s ".formatted(qi.getColumn()));
-                        part.append(" <= ? ");
-
-                        // b 是时间，但是b跟a的时间相同，并且 a 时间的 时分秒都是0，就把b的时分秒补成 23:59:59.999
-                        if (b instanceof Timestamp bTime && b.equals(a)
-                            && bTime.toLocalDateTime().getHour() == 0
-                            && bTime.toLocalDateTime().getMinute() == 0
-                            && bTime.toLocalDateTime().getSecond() == 0) {
-
-                            Calendar cal = Calendar.getInstance();
-                            cal.setTime(bTime);
-                            cal.set(Calendar.HOUR_OF_DAY, 23);
-                            cal.set(Calendar.MINUTE, 59);
-                            cal.set(Calendar.SECOND, 59);
-                            cal.set(Calendar.MILLISECOND, 999);
-                            b = new Timestamp(cal.getTimeInMillis());
-                        }
-
-                        params.add(b);
-                    }
+                case GREATER_THAN_EQUAL:
+                    part.append(" >= ? ");
+                    params.add(v);
+                    break;
+                case LESS_THAN:
+                    part.append(" < ? ");
+                    params.add(v);
+                    break;
+                case LESS_THAN_EQUAL:
+                    part.append(" <= ? ");
+                    params.add(v);
                     break;
                 default:
                     throw new QueryException("不支持的符号类型: " + symbolType);

@@ -47,7 +47,7 @@ public class UserController implements ISingleCreateAbility, IUpdateAbility , ID
     
     @Override
     public List<String> getOpenColumns() {
-        return List.of("nickname", "avatar_url");
+        return List.of("nickname", "avatar_url","t_create");
     }
     
     public Map<String, Object> check(String username) {

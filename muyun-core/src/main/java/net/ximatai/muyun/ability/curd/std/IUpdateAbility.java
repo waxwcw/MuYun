@@ -57,21 +57,6 @@ public interface IUpdateAbility extends IDatabaseAbilityStd, IMetadataAbility {
             map.put("id_at_auth_user__update", userID);
         }
 
-//        if (this instanceof ITreeAbility treeAbility) {
-//            if (id.equals(body.get(treeAbility.getParentKeyColumn().getName()))) {
-//                throw new MuYunException("树结构的父节点不能是它自身");
-//            }
-//
-//            String pid = (String) body.get(treeAbility.getParentKeyColumn().getName());
-//            if (pid != null) {
-//                List<TreeNode> tree = treeAbility.tree(id, true, null, null);
-//                if (isIdInTree(tree, pid)) {
-//                    throw new MuYunException("不能编辑该节点的父节点为其子孙节点");
-//                }
-//            }
-//
-//        }
-
         if (this instanceof IChildrenAbility childrenAbility) {
             childrenAbility.getChildren().forEach(childTableInfo -> {
                 String childAlias = childTableInfo.getChildAlias();
@@ -87,18 +72,4 @@ public interface IUpdateAbility extends IDatabaseAbilityStd, IMetadataAbility {
 
         return result;
     }
-
-//    private boolean isIdInTree(List<? extends TreeNode> tree, String id) {
-//        for (TreeNode node : tree) {
-//            if (node.getId().equals(id)) {
-//                return true;
-//            } else if (node.getChildren() != null && !node.getChildren().isEmpty()) {
-//                if (isIdInTree(node.getChildren(), id)) {
-//                    return true;
-//                }
-//            }
-//        }
-//        return false;
-//    }
-
 }

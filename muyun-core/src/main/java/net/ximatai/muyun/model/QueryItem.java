@@ -47,8 +47,11 @@ public class QueryItem {
 
     @Schema(description = "比较类型")
     public enum SymbolType {
-        EQUAL, NOT_EQUAL, LIKE, IN, NOT_IN, RANGE,
-        PG_ARRAY_EQUAL, PG_ARRAY_OVERLAP, PG_ARRAY_CONTAIN, PG_ARRAY_BE_CONTAIN
+        EQUAL, NOT_EQUAL, LIKE,
+        GREATER_THAN,        // 大于
+        GREATER_THAN_EQUAL,  // 大于等于
+        LESS_THAN,           // 小于
+        LESS_THAN_EQUAL      // 小于等于
     }
 
     public QueryItem setColumn(String column) {

@@ -23,14 +23,4 @@ public class ReportController implements ISingleCreateAbility {
         return "report";
     }
 
-//    @POST
-//    @Path("/feedback")
-//    @Transactional
-//    @Operation(
-//            summary = "题目反馈"
-//    )
-//    public String feedback() {
-//        return null;
-//    }
-
 }

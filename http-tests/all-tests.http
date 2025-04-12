@@ -1,12 +1,9 @@
-# MuYun API 测试集合
 # 此文件用于统一运行所有测试，请按顺序执行以确保依赖数据正确创建
 
-# 1. 首先设置环境变量
-# 请在IntelliJ IDEA或VSCode中安装RestClient插件
 # 选择右上角的环境选择器，选择 "dev" 环境
 
 # 2. 执行用户创建
-< ./user.http
+./user.http
 
 # 3. 执行登录并获取Token
 < ./security.http(login)

@@ -59,3 +59,8 @@ Authorization: Bearer {{token}}
 {
     "type": "问答"
 }
+
+### 获取所有帖子
+GET {{baseUrl}}/api/infor-flow/delete/9368f0e5-5378-48cf-9614-8e400d26984e
+Content-Type: application/json
+Authorization: Bearer {{token}}

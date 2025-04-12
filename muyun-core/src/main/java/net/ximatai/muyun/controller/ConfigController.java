@@ -6,7 +6,6 @@ import io.vertx.core.json.JsonObject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.core.Scaffold;
 import net.ximatai.muyun.util.ResponseUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
@@ -20,7 +19,7 @@ import java.util.Map;
 
 @Startup
 @Path("config")
-public class ConfigController extends Scaffold {
+public class ConfigController {
 
     private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(ConfigController.class);
     @POST

@@ -4,11 +4,15 @@ package net.ximatai.muyun.controller;
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
+import net.ximatai.muyun.ability.IChildrenAbility;
 import net.ximatai.muyun.ability.IReferenceAbility;
 import net.ximatai.muyun.ability.curd.std.*;
 import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.model.ChildTableInfo;
 import net.ximatai.muyun.model.QueryItem;
 import net.ximatai.muyun.model.ReferenceInfo;
 
@@ -20,7 +24,7 @@ import java.util.Map;
 
 @Startup
 @Path("infor-flow")
-public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, ICustomSelectSqlAbility ,IQueryAbility, IReferenceAbility {
+public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, ICustomSelectSqlAbility ,IQueryAbility, IReferenceAbility, IChildrenAbility {
 
 
     @Inject
@@ -113,5 +117,36 @@ public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, I
                 .add("nickname","nickname")
                 .add("avatar_url","avatar_url")
         );
+    }
+
+    @Override
+    public List<ChildTableInfo> getChildren() {
+        return List.of();
+    }
+    
+    /**
+     * 重写删除方法，实现级联删除动态图片
+     * @param id 动态ID
+     * @return 删除结果
+     */
+    @Override
+    @GET
+    @Path("/delete/{id}")
+    @Transactional
+    public Integer delete(@PathParam("id") String id) {
+        // 删除前的操作
+        this.beforeDelete(id);
+        
+        // 先级联删除关联的图片记录
+        cascadeDeleteRelated(id, "post_image", "post_id");
+
+        cascadeDeleteRelated(id, "comment", "post_id");
+        
+        // 删除主表记录
+        int result = getDB().deleteItem(getSchemaName(), getMainTable(), id);
+        
+        // 删除后的操作
+        afterDelete(id);
+        return result;
     }
 }
