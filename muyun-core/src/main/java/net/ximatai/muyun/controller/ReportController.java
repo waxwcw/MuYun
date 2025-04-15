@@ -3,7 +3,7 @@ package net.ximatai.muyun.controller;
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
-import net.ximatai.muyun.ability.curd.std.ISingleCreateAbility;
+import net.ximatai.muyun.method.curd.std.ISingleCreateAbility;
 import net.ximatai.muyun.database.IDatabaseOperations;
 
 @Startup

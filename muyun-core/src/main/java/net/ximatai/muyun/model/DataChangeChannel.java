@@ -1,6 +1,6 @@
 package net.ximatai.muyun.model;
 
-import net.ximatai.muyun.ability.IMetadataAbility;
+import net.ximatai.muyun.method.IMetadataAbility;
 
 public class DataChangeChannel {
 

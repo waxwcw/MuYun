@@ -1,7 +1,7 @@
 package net.ximatai.muyun.model;
 
-import net.ximatai.muyun.ability.IReferableAbility;
-import net.ximatai.muyun.ability.curd.std.ICustomSelectSqlAbility;
+import net.ximatai.muyun.method.IReferableAbility;
+import net.ximatai.muyun.method.curd.std.ICustomSelectSqlAbility;
 import net.ximatai.muyun.core.exception.MuYunException;
 
 import java.util.HashMap;

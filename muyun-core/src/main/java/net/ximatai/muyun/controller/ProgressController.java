@@ -6,9 +6,9 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.ability.IReferenceAbility;
-import net.ximatai.muyun.ability.curd.std.ICreateAbility;
-import net.ximatai.muyun.ability.curd.std.IQueryAbility;
+import net.ximatai.muyun.method.IReferenceAbility;
+import net.ximatai.muyun.method.curd.std.ICreateAbility;
+import net.ximatai.muyun.method.curd.std.IQueryAbility;
 import net.ximatai.muyun.database.IDatabaseOperations;
 import net.ximatai.muyun.model.QueryItem;
 
@@ -32,9 +32,6 @@ public class ProgressController implements ICreateAbility, IQueryAbility, IRefer
 
     @Inject
     QuestionController questionController;
-
-    @Inject
-    CategoryController categoryController;
 
     @Override
     public IDatabaseOperations getDatabaseOperations() {
@@ -289,6 +286,25 @@ public class ProgressController implements ICreateAbility, IQueryAbility, IRefer
             // 执行查询
             List<Map<String, Object>> statsResults = getDB().query(statsSqlBuilder.toString(), params);
             
+            // 获取今日答题数
+            String todaySql = "SELECT COUNT(*) as total_today FROM " + getSchemaName() + "." + getMainTable() +
+                             " WHERE user_id = ? AND DATE(last_practiced_at) = CURRENT_DATE";
+            
+            List<Object> todayParams = new ArrayList<>();
+            todayParams.add(userId);
+            
+            if (categoryId != null && !categoryId.isEmpty()) {
+                todaySql += " AND category_id = ?";
+                todayParams.add(categoryId);
+            }
+            
+            List<Map<String, Object>> todayResults = getDB().query(todaySql, todayParams);
+            long totalToday = 0;
+            
+            if (!todayResults.isEmpty() && todayResults.getFirst().get("total_today") != null) {
+                totalToday = ((Number) todayResults.getFirst().get("total_today")).longValue();
+            }
+            
             if (statsResults.isEmpty() || statsResults.getFirst().get("total_questions") == null) {
                 return Response.ok(Map.of(
                     "user_id", userId,
@@ -298,6 +314,7 @@ public class ProgressController implements ICreateAbility, IQueryAbility, IRefer
                     "total_wrong", 0,
                     "completed_count", 0,
                     "favorite_count", 0,
+                    "total_today", totalToday,
                     "accuracy_rate", 0.0
                 )).build();
             }
@@ -317,6 +334,7 @@ public class ProgressController implements ICreateAbility, IQueryAbility, IRefer
             
             stats.put("accuracy_rate", accuracyRate);
             stats.put("user_id", userId);
+            stats.put("total_today", totalToday);
             
             if (categoryId != null && !categoryId.isEmpty()) {
                 stats.put("category_id", categoryId);

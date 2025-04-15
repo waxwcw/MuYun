@@ -7,8 +7,8 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
-import net.ximatai.muyun.ability.IReferableAbility;
-import net.ximatai.muyun.ability.curd.std.*;
+import net.ximatai.muyun.method.IReferableAbility;
+import net.ximatai.muyun.method.curd.std.*;
 import net.ximatai.muyun.database.IDatabaseOperations;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 

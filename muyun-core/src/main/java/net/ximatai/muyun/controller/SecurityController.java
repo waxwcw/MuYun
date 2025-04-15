@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.ability.IRuntimeAbility;
+import net.ximatai.muyun.method.IRuntimeAbility;
 import net.ximatai.muyun.model.ApiRequest;
 import net.ximatai.muyun.model.IRuntimeUser;
 import net.ximatai.muyun.util.JwtUtil;

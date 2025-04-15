@@ -3,7 +3,7 @@
 ### 成功创建带图片的帖子
 POST {{baseUrl}}/api/infor-flow/create
 Content-Type: application/json
-Authorization: Bearer {{token}}
+#Authorization: Bearer {{token}}
 
 {
     "user_id": "{{userId}}",
@@ -18,7 +18,7 @@ Authorization: Bearer {{token}}
 ###
 POST {{baseUrl}}/api/infor-flow/create
 Content-Type: application/json
-Authorization: Bearer {{token}}
+#Authorization: Bearer {{token}}
 
 {
     "user_id": "{{userId}}",
