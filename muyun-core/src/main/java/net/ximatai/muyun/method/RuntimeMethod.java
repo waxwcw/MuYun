@@ -9,7 +9,7 @@ import net.ximatai.muyun.model.IRuntimeUser;
 /**
  * 获取运行时上下文的能力
  */
-public interface IRuntimeAbility extends IProfile {
+public interface RuntimeMethod extends IProfile {
     RoutingContext getRoutingContext();
 
     default ApiRequest getApiRequest() {

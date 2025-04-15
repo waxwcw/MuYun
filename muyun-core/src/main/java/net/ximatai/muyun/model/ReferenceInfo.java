@@ -1,7 +1,7 @@
 package net.ximatai.muyun.model;
 
-import net.ximatai.muyun.method.IReferableAbility;
-import net.ximatai.muyun.method.curd.std.ICustomSelectSqlAbility;
+import net.ximatai.muyun.method.ReferableMethod;
+import net.ximatai.muyun.method.curd.std.CustomSelectSqlMethod;
 import net.ximatai.muyun.core.exception.MuYunException;
 
 import java.util.HashMap;
@@ -12,7 +12,7 @@ public class ReferenceInfo {
     // 关联字段
     private final String relationColumn;
     // 关联的 Controller
-    private final IReferableAbility ctrl;
+    private final ReferableMethod ctrl;
     // 是否深度关联，如果深度关联，就回把原始 ctrl的查询语句作为 被关联的字查询拉出来，这样可以就可以获取该 ctrl 已关联的字段。
     private boolean isDeep = false;
 
@@ -21,17 +21,17 @@ public class ReferenceInfo {
     // 除了关联字段外，其他辅助条件，比如关联数据字典，就需要多一个字典类目作为过滤条件
     private Map<String, String> otherConditions = new HashMap<>();
 
-    public ReferenceInfo(String relationColumn, IReferableAbility ctrl) {
+    public ReferenceInfo(String relationColumn, ReferableMethod ctrl) {
         this.relationColumn = relationColumn;
         this.ctrl = ctrl;
     }
 
     public boolean isReferenceCustomSelectSqlAbility() {
-        return ctrl instanceof ICustomSelectSqlAbility;
+        return ctrl instanceof CustomSelectSqlMethod;
     }
 
     public String getReferenceCustomSql() {
-        if (ctrl instanceof ICustomSelectSqlAbility ability) {
+        if (ctrl instanceof CustomSelectSqlMethod ability) {
             return "(%s)".formatted(ability.getCustomSql());
         } else {
             throw new MuYunException("Can't get reference custom sql without ICustomSelectSqlAbility");

@@ -8,7 +8,7 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.*;
 
-public interface ISingleSelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface SingleSelectMethod extends DatabaseMethodStd, MetadataMethod {
 
     default boolean showCurrentDate() {
         return false;
@@ -23,7 +23,7 @@ public interface ISingleSelectAbility extends IDatabaseAbilityStd, IMetadataAbil
         StringBuilder joinSql = new StringBuilder();
         String softDeleteSql = "";
 
-        if (this instanceof IReferenceAbility referenceAbility) {
+        if (this instanceof ReferenceMethod referenceAbility) {
             referenceAbility.getReferenceList().forEach(info -> {
                 String referenceTableTempName = "%s_%s".formatted(info.getReferenceTableName(), UUID.randomUUID().toString().substring(25));
                 info.getTranslates().forEach((column, alias) -> {
@@ -53,7 +53,7 @@ public interface ISingleSelectAbility extends IDatabaseAbilityStd, IMetadataAbil
         }
 
         String mainTable = getSchemaDotTable();
-        if (this instanceof ICustomSelectSqlAbility ability) {
+        if (this instanceof CustomSelectSqlMethod ability) {
             mainTable = "(%s) as %s ".formatted(ability.getCustomSql(), getMainTable());
         }
 

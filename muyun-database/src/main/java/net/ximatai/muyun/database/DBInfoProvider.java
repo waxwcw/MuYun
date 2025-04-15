@@ -12,7 +12,7 @@ import java.sql.ResultSet;
 
 import static net.ximatai.muyun.database.exception.MyDatabaseException.Type.READ_METADATA_ERROR;
 
-public interface IDBInfoProvider {
+public interface DBInfoProvider {
 
     Jdbi getJdbi();
 

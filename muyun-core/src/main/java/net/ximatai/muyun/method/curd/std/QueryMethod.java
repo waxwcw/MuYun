@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * 根据条件对数据进行复杂查询的能力
  */
-public interface IQueryAbility extends ISelectAbility {
+public interface QueryMethod extends SelectMethod {
 
     List<QueryItem> queryItemList();
 

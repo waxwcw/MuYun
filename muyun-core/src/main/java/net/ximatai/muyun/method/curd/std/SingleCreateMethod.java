@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public interface ISingleCreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface SingleCreateMethod extends DatabaseMethodStd, MetadataMethod {
 
 
     default void beforeCreate(Map body) {

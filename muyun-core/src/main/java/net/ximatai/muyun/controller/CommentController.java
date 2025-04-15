@@ -4,9 +4,9 @@ package net.ximatai.muyun.controller;
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
-import net.ximatai.muyun.method.IReferenceAbility;
+import net.ximatai.muyun.method.ReferenceMethod;
 import net.ximatai.muyun.method.curd.std.*;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.database.DBOperations;
 import net.ximatai.muyun.model.QueryItem;
 import net.ximatai.muyun.model.ReferenceInfo;
 
@@ -16,17 +16,17 @@ import java.util.List;
 
 @Startup
 @Path("comment")
-public class CommentController implements  IDeleteAbility, ISingleCreateAbility, IQueryAbility, IReferenceAbility {
+public class CommentController implements DeleteMethod, SingleCreateMethod, QueryMethod, ReferenceMethod {
 
 
     @Inject
     UserController userController;
 
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 

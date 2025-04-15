@@ -6,18 +6,18 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public interface IDatabaseOperationsStd extends IDatabaseOperations {
+public interface DBOperationsStd extends DBOperations {
 
     default String insertItem(String schema, String tableName, Map<String, ?> params) {
-        return (String) IDatabaseOperations.super.insertItem(schema, tableName, params);
+        return (String) DBOperations.super.insertItem(schema, tableName, params);
     }
 
     default List<String> insertList(String schema, String tableName, List<? extends Map<String, ?>> list) {
-        return (List<String>) IDatabaseOperations.super.insertList(schema, tableName, list);
+        return (List<String>) DBOperations.super.insertList(schema, tableName, list);
     }
 
     default Integer updateItem(String schema, String tableName, Map<String, ?> params) {
-        Integer num = (Integer) IDatabaseOperations.super.updateItem(schema, tableName, params);
+        Integer num = (Integer) DBOperations.super.updateItem(schema, tableName, params);
         if (num == 0) {
             throw new MyDatabaseException(MyDatabaseException.Type.DATA_NOT_FOUND);
         }
@@ -25,11 +25,11 @@ public interface IDatabaseOperationsStd extends IDatabaseOperations {
     }
 
     default Map<String, Object> getItem(String schema, String tableName, String id) {
-        return (Map<String, Object>) IDatabaseOperations.super.getItem(schema, tableName, id);
+        return (Map<String, Object>) DBOperations.super.getItem(schema, tableName, id);
     }
 
     default Integer deleteItem(String schema, String tableName, String id) {
-        Integer num = (Integer) IDatabaseOperations.super.deleteItem(schema, tableName, id);
+        Integer num = (Integer) DBOperations.super.deleteItem(schema, tableName, id);
         if (num == 0) {
             throw new MyDatabaseException(MyDatabaseException.Type.DATA_NOT_FOUND);
         }

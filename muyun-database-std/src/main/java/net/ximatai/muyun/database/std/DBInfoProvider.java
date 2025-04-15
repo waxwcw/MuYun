@@ -1,11 +1,10 @@
 package net.ximatai.muyun.database.std;
 
 import jakarta.inject.Inject;
-import net.ximatai.muyun.database.IDBInfoProvider;
 import net.ximatai.muyun.database.metadata.DBInfo;
 import org.jdbi.v3.core.Jdbi;
 
-public class DBInfoProvider implements IDBInfoProvider {
+public class DBInfoProvider implements net.ximatai.muyun.database.DBInfoProvider {
 
     private Jdbi jdbi;
     private DBInfo dbInfo;
@@ -29,7 +28,7 @@ public class DBInfoProvider implements IDBInfoProvider {
     @Override
     public DBInfo getDBInfo() {
         if (dbInfo == null) {
-            dbInfo = IDBInfoProvider.super.getDBInfo();
+            dbInfo = net.ximatai.muyun.database.DBInfoProvider.super.getDBInfo();
         }
         return dbInfo;
     }

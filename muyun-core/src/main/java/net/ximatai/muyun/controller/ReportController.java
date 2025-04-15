@@ -3,18 +3,18 @@ package net.ximatai.muyun.controller;
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
-import net.ximatai.muyun.method.curd.std.ISingleCreateAbility;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.method.curd.std.SingleCreateMethod;
+import net.ximatai.muyun.database.DBOperations;
 
 @Startup
 @Path("report")
-public class ReportController implements ISingleCreateAbility {
+public class ReportController implements SingleCreateMethod {
 
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 

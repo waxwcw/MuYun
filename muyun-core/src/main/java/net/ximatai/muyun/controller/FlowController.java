@@ -8,9 +8,9 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import net.ximatai.muyun.method.IReferenceAbility;
+import net.ximatai.muyun.method.ReferenceMethod;
 import net.ximatai.muyun.method.curd.std.*;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.database.DBOperations;
 import net.ximatai.muyun.model.QueryItem;
 import net.ximatai.muyun.model.ReferenceInfo;
 
@@ -22,17 +22,17 @@ import java.util.Map;
 
 @Startup
 @Path("infor-flow")
-public class FlowController  implements  ISingleCreateAbility, IDeleteAbility, ICustomSelectSqlAbility ,IQueryAbility, IReferenceAbility {
+public class FlowController  implements SingleCreateMethod, DeleteMethod, CustomSelectSqlMethod, QueryMethod, ReferenceMethod {
 
 
     @Inject
     UserController userController;
 
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 

@@ -4,8 +4,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import net.ximatai.muyun.method.IDatabaseAbilityStd;
-import net.ximatai.muyun.method.IMetadataAbility;
+import net.ximatai.muyun.method.DatabaseMethodStd;
+import net.ximatai.muyun.method.MetadataMethod;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 删除数据的能力
  */
-public interface IDeleteAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface DeleteMethod extends DatabaseMethodStd, MetadataMethod {
 
     default void beforeDelete(String id) {}
 

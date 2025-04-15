@@ -25,10 +25,10 @@ import java.util.stream.Collectors;
 /**
  * 查询数据的能力（单条+多条分页）
  */
-public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface SelectMethod extends DatabaseMethodStd, MetadataMethod {
 
     default SortColumn getDefatultSortColumn() {
-        if (this instanceof ISortAbility ability) {
+        if (this instanceof SortMethod ability) {
             return ability.getSortColumn();
         }
 
@@ -63,7 +63,7 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         StringBuilder joinSql = new StringBuilder();
         String softDeleteSql = "";
 
-        if (this instanceof IReferenceAbility referenceAbility) {
+        if (this instanceof ReferenceMethod referenceAbility) {
 
             referenceAbility.getReferenceList().forEach(info -> {
                 String referenceTableTempName = "%s_%s".formatted(info.getReferenceTableName(), UUID.randomUUID().toString().substring(25));
@@ -95,7 +95,7 @@ public interface ISelectAbility extends IDatabaseAbilityStd, IMetadataAbility {
         }
 
         String mainTable = getSchemaDotTable();
-        if (this instanceof ICustomSelectSqlAbility ability) {
+        if (this instanceof CustomSelectSqlMethod ability) {
             mainTable = "(%s) as %s ".formatted(ability.getCustomSql(), getMainTable());
         }
 

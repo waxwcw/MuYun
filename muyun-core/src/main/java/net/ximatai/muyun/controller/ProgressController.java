@@ -6,10 +6,10 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.method.IReferenceAbility;
-import net.ximatai.muyun.method.curd.std.ICreateAbility;
-import net.ximatai.muyun.method.curd.std.IQueryAbility;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.method.ReferenceMethod;
+import net.ximatai.muyun.method.curd.std.CreateMethod;
+import net.ximatai.muyun.method.curd.std.QueryMethod;
+import net.ximatai.muyun.database.DBOperations;
 import net.ximatai.muyun.model.QueryItem;
 
 import java.time.LocalDateTime;
@@ -26,15 +26,15 @@ import org.eclipse.microprofile.openapi.annotations.Operation;
 @Path("progress")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ProgressController implements ICreateAbility, IQueryAbility, IReferenceAbility {
+public class ProgressController implements CreateMethod, QueryMethod, ReferenceMethod {
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Inject
     QuestionController questionController;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 

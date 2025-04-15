@@ -4,8 +4,8 @@ import jakarta.transaction.Transactional;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
-import net.ximatai.muyun.method.IDatabaseAbilityStd;
-import net.ximatai.muyun.method.IMetadataAbility;
+import net.ximatai.muyun.method.DatabaseMethodStd;
+import net.ximatai.muyun.method.MetadataMethod;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 
 import java.time.LocalDateTime;
@@ -16,7 +16,7 @@ import java.util.Optional;
 /**
  * 修改数据的能力
  */
-public interface IUpdateAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface UpdateMethod extends DatabaseMethodStd, MetadataMethod {
 
     /**
      * @deprecated 请使用带 Map 参数的 beforeUpdate 方法，这个方法将在未来的版本中移除

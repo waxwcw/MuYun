@@ -3,23 +3,23 @@ package net.ximatai.muyun.controller;
 import io.quarkus.runtime.Startup;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Path;
-import net.ximatai.muyun.method.IReferableAbility;
-import net.ximatai.muyun.method.curd.std.ICustomSelectSqlAbility;
-import net.ximatai.muyun.method.curd.std.ISelectAbility;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.method.ReferableMethod;
+import net.ximatai.muyun.method.curd.std.CustomSelectSqlMethod;
+import net.ximatai.muyun.method.curd.std.SelectMethod;
+import net.ximatai.muyun.database.DBOperations;
 
 import java.util.List;
 
 
 @Startup
 @Path("category")
-public class CategoryController implements ISelectAbility, IReferableAbility, ICustomSelectSqlAbility{
+public class CategoryController implements SelectMethod, ReferableMethod, CustomSelectSqlMethod {
 
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 

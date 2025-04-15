@@ -8,7 +8,7 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import net.ximatai.muyun.method.IRuntimeAbility;
+import net.ximatai.muyun.method.RuntimeMethod;
 import net.ximatai.muyun.model.ApiRequest;
 import net.ximatai.muyun.model.IRuntimeUser;
 import net.ximatai.muyun.util.JwtUtil;
@@ -26,7 +26,7 @@ import java.util.Map;
 @PermitAll
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class SecurityController implements IRuntimeAbility {
+public class SecurityController implements RuntimeMethod {
 
     @Inject
     RoutingContext routingContext;

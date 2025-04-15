@@ -3,7 +3,7 @@ package net.ximatai.muyun.method;
 /**
  * 数据行标签化的能力（树、被关联自动翻译、日志记录时展示字段）
  */
-public interface ILabelAbility extends IMetadataAbility {
+public interface LabelMethod extends MetadataMethod {
     default String getLabelColumn() {
         if (checkColumn("v_name")) {
             return "v_name";

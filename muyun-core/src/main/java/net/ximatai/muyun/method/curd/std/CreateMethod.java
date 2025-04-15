@@ -16,7 +16,7 @@ import java.util.Map;
 /**
  * 创建数据的能力
  */
-public interface ICreateAbility extends IDatabaseAbilityStd, IMetadataAbility {
+public interface CreateMethod extends DatabaseMethodStd, MetadataMethod {
 
     default void beforeCreate(Map body) {
 

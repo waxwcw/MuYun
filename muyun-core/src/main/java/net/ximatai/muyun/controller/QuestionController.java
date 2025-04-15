@@ -6,16 +6,15 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
-import net.ximatai.muyun.method.IReferableAbility;
-import net.ximatai.muyun.method.IReferenceAbility;
-import net.ximatai.muyun.method.IRuntimeAbility;
-import net.ximatai.muyun.method.curd.std.ICreateAbility;
-import net.ximatai.muyun.method.curd.std.ICustomSelectSqlAbility;
-import net.ximatai.muyun.method.curd.std.IQueryAbility;
-import net.ximatai.muyun.database.IDatabaseOperations;
+import net.ximatai.muyun.method.ReferableMethod;
+import net.ximatai.muyun.method.ReferenceMethod;
+import net.ximatai.muyun.method.RuntimeMethod;
+import net.ximatai.muyun.method.curd.std.CreateMethod;
+import net.ximatai.muyun.method.curd.std.CustomSelectSqlMethod;
+import net.ximatai.muyun.method.curd.std.QueryMethod;
+import net.ximatai.muyun.database.DBOperations;
 import net.ximatai.muyun.model.IRuntimeUser;
 import net.ximatai.muyun.model.PageResult;
-import net.ximatai.muyun.model.QueryGroup;
 import net.ximatai.muyun.model.QueryItem;
 import net.ximatai.muyun.model.ReferenceInfo;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -29,10 +28,10 @@ import java.util.stream.Collectors;
 
 @Startup
 @Path("question")
-public class QuestionController implements IQueryAbility, ICreateAbility, IReferenceAbility, IReferableAbility, IRuntimeAbility, ICustomSelectSqlAbility {
+public class QuestionController implements QueryMethod, CreateMethod, ReferenceMethod, ReferableMethod, RuntimeMethod, CustomSelectSqlMethod {
 
     @Inject
-    IDatabaseOperations databaseOperations;
+    DBOperations databaseOperations;
 
     @Inject
     CategoryController categoryController;
@@ -44,7 +43,7 @@ public class QuestionController implements IQueryAbility, ICreateAbility, IRefer
     RoutingContext routingContext;
 
     @Override
-    public IDatabaseOperations getDatabaseOperations() {
+    public DBOperations getDatabaseOperations() {
         return databaseOperations;
     }
 
@@ -129,7 +128,7 @@ public class QuestionController implements IQueryAbility, ICreateAbility, IRefer
         }
         
         // Get the base result with standard filtering
-        PageResult result = IQueryAbility.super.view(page, size, noPage, sort, queryBody);
+        PageResult result = QueryMethod.super.view(page, size, noPage, sort, queryBody);
         
         // If we need to filter out completed questions and the user is authenticated
         if (excludeCompleted && !userId.equals(IRuntimeUser.WHITE.getId())) {

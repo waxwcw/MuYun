@@ -4,7 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.transaction.Transactional;
-import net.ximatai.muyun.database.IDatabaseOperationsStd;
+import net.ximatai.muyun.database.DBOperationsStd;
 import net.ximatai.muyun.database.exception.MyDatabaseException;
 import net.ximatai.muyun.database.metadata.DBColumn;
 import net.ximatai.muyun.database.metadata.DBTable;
@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @ApplicationScoped
-public class DataAccessStd extends DBInfoProvider implements IDatabaseOperationsStd {
+public class DataAccessStd extends DBInfoProvider implements DBOperationsStd {
 
     Jsonb jsonb = JsonbBuilder.create();
 

@@ -5,8 +5,8 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.QueryParam;
-import net.ximatai.muyun.method.curd.std.ISelectAbility;
-import net.ximatai.muyun.method.curd.std.IUpdateAbility;
+import net.ximatai.muyun.method.curd.std.SelectMethod;
+import net.ximatai.muyun.method.curd.std.UpdateMethod;
 import net.ximatai.muyun.model.SortColumn;
 import net.ximatai.muyun.util.StringUtil;
 import org.eclipse.microprofile.openapi.annotations.Operation;
@@ -18,7 +18,7 @@ import java.util.HashMap;
 /**
  * 数据排序的能力
  */
-public interface ISortAbility extends ISelectAbility, IUpdateAbility {
+public interface SortMethod extends SelectMethod, UpdateMethod {
 
     default SortColumn getSortColumn() {
         return SortColumn.ORDER;

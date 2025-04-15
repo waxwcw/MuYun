@@ -6,7 +6,7 @@ import net.ximatai.muyun.database.metadata.DBTable;
 /**
  * 元数据信息能力
  */
-public interface IMetadataAbility extends IDatabaseAbility {
+public interface MetadataMethod extends DatabaseMethod {
     String getMainTable();
     default String getSchemaName() {
         return "public";

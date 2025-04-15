@@ -1,6 +1,6 @@
 package net.ximatai.muyun.model;
 
-import net.ximatai.muyun.method.IMetadataAbility;
+import net.ximatai.muyun.method.MetadataMethod;
 
 public class DataChangeChannel {
 
@@ -12,7 +12,7 @@ public class DataChangeChannel {
         this.table = table;
     }
 
-    public DataChangeChannel(IMetadataAbility metadataAbility) {
+    public DataChangeChannel(MetadataMethod metadataAbility) {
         this.schema = metadataAbility.getSchemaName();
         this.table = metadataAbility.getMainTable();
     }
